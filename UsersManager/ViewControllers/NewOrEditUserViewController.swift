@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewEditUserViewController: UIViewController {
+class NewOrEditUserViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

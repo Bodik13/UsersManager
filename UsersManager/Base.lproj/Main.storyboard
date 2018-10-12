@@ -55,10 +55,10 @@
             </objects>
             <point key="canvasLocation" x="944.79999999999995" y="82.3088455772114"/>
         </scene>
-        <!--New Edit User View Controller-->
+        <!--New Or Edit User View Controller-->
         <scene sceneID="hqW-Wx-dgi">
             <objects>
-                <viewController id="rD6-m1-wzK" customClass="NewEditUserViewController" customModule="UsersManager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="rD6-m1-wzK" customClass="NewOrEditUserViewController" customModule="UsersManager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CF3-Kv-XGt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
