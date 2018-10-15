@@ -7,18 +7,32 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class UsersListViewController: UIViewController {
     
     @IBOutlet weak var usersTableView: UITableView!
     
     let toNewUserIdentifier: String = "toNewUser"
-    var usersList: [User] = [User]()
+    var usersList: [User] = [User]() {
+        didSet {
+            self.usersTableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addBottomPadding()
+        self.loadUsers()
         
+    }
+    
+    private func loadUsers() {
+        NetworkManager.getUsers(success: { (users) in
+            self.usersList = users
+        }) { (error) in
+            
+        }
     }
     
     private func addBottomPadding() {
@@ -39,7 +53,18 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "")
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "")
+        let user = self.usersList[indexPath.row]
+        cell.textLabel?.text = (user.firstName ?? "") + " " + (user.lastName ?? "")
+        cell.detailTextLabel?.text = user.email ?? "Email empty"
+        
+        cell.imageView?.image = UIImage(named: "icon_account")
+        cell.imageView?.contentMode = .scaleAspectFit
+        
+        if let url = URL(string: user.imageUrl ?? "") {
+            cell.imageView?.af_setImage(withURL: url)
+        }
+        
         return cell
     }
     
