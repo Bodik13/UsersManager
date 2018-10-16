@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		190797D7216F799000877A54 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190797D6216F799000877A54 /* User.swift */; };
 		190797D9216F7B9A00877A54 /* NewOrEditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190797D8216F7B9A00877A54 /* NewOrEditUserViewController.swift */; };
+		19B82BB72176097100A2E693 /* AlertDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B82BB62176097100A2E693 /* AlertDisplayable.swift */; };
+		19B82BB921760CA200A2E693 /* ProgressDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B82BB821760CA200A2E693 /* ProgressDisplayable.swift */; };
 		19F12242216F436100C2DC30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F12241216F436100C2DC30 /* AppDelegate.swift */; };
 		19F12244216F436100C2DC30 /* UsersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F12243216F436100C2DC30 /* UsersListViewController.swift */; };
 		19F12247216F436100C2DC30 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19F12245216F436100C2DC30 /* Main.storyboard */; };
@@ -24,6 +26,8 @@
 /* Begin PBXFileReference section */
 		190797D6216F799000877A54 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		190797D8216F7B9A00877A54 /* NewOrEditUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOrEditUserViewController.swift; sourceTree = "<group>"; };
+		19B82BB62176097100A2E693 /* AlertDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDisplayable.swift; sourceTree = "<group>"; };
+		19B82BB821760CA200A2E693 /* ProgressDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDisplayable.swift; sourceTree = "<group>"; };
 		19F1223E216F436100C2DC30 /* UsersManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UsersManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19F12241216F436100C2DC30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		19F12243216F436100C2DC30 /* UsersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +73,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		19B82BB52176095200A2E693 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				19B82BB62176097100A2E693 /* AlertDisplayable.swift */,
+				19B82BB821760CA200A2E693 /* ProgressDisplayable.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		19F12235216F436100C2DC30 = {
 			isa = PBXGroup;
 			children = (
@@ -90,6 +103,7 @@
 		19F12240216F436100C2DC30 /* UsersManager */ = {
 			isa = PBXGroup;
 			children = (
+				19B82BB52176095200A2E693 /* Extension */,
 				190797D5216F797500877A54 /* Model */,
 				190797D4216F758200877A54 /* ViewController */,
 				A2D907B421750794006FA74E /* Services */,
@@ -254,10 +268,12 @@
 			files = (
 				A2D907BC217528FE006FA74E /* DefaultDateFormatter.swift in Sources */,
 				A2D907BA21750FA7006FA74E /* Serializable.swift in Sources */,
+				19B82BB72176097100A2E693 /* AlertDisplayable.swift in Sources */,
 				190797D9216F7B9A00877A54 /* NewOrEditUserViewController.swift in Sources */,
 				A2D907B821750BED006FA74E /* Defaults.swift in Sources */,
 				19F12244216F436100C2DC30 /* UsersListViewController.swift in Sources */,
 				A2D907B6217507AA006FA74E /* NetworkManager.swift in Sources */,
+				19B82BB921760CA200A2E693 /* ProgressDisplayable.swift in Sources */,
 				19F12242216F436100C2DC30 /* AppDelegate.swift in Sources */,
 				190797D7216F799000877A54 /* User.swift in Sources */,
 			);

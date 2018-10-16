@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewOrEditUserViewController: UIViewController {
+class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressDisplayable {
 
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -24,10 +24,13 @@ class NewOrEditUserViewController: UIViewController {
     @IBAction func newUserButtonTapped(_ sender: Any) {
         let newUser = User(firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text, email: self.emailTextField.text)
         
+        self.showLoadingIndicator()
         NetworkManager.newUser(user: newUser, success: {
-           print(newUser)
+            self.hideLoadingIndicator()
+           self.showAllert(with: "Success!", messege: "New user successfully added.")
         }) { (error) in
-            
+            self.hideLoadingIndicator()
+            if let error = error { self.showError(error: error) }
         }
     }
    

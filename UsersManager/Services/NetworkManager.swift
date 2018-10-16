@@ -10,7 +10,6 @@ import Foundation
 import Alamofire
 
 class NetworkManager {
-    
     class func getUsers(success: @escaping ([User]) -> (), failed: @escaping (Error?) -> ()) {
         Alamofire.request(Defaults.NetworkURLS.USERS).responseJSON { response in
             switch response.result {
@@ -31,7 +30,10 @@ class NetworkManager {
     class func newUser(user: User, success: @escaping () -> (), failed: @escaping (Error?) -> ()) {
         let bodyParams = [Defaults.Keys.USER : user.toDict()]
         
-        Alamofire.request(Defaults.NetworkURLS.USERS, method: .post, parameters: bodyParams, encoding: JSONEncoding.default).responseJSON { response in
+        Alamofire.request(Defaults.NetworkURLS.USERS,
+                          method: .post,
+                          parameters: bodyParams,
+                          encoding: JSONEncoding.default).responseJSON { response in
             let successStatusCode = 201
             switch response.result {
             case .success:
@@ -45,5 +47,4 @@ class NetworkManager {
             }
         }
     }
-
 }

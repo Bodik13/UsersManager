@@ -9,7 +9,7 @@
 import UIKit
 import AlamofireImage
 
-class UsersListViewController: UIViewController {
+class UsersListViewController: UIViewController, AlertDisplayable, ProgressDisplayable {
     
     @IBOutlet weak var usersTableView: UITableView!
     
@@ -28,10 +28,13 @@ class UsersListViewController: UIViewController {
     }
     
     private func loadUsers() {
+        self.showLoadingIndicator()
         NetworkManager.getUsers(success: { (users) in
+            self.hideLoadingIndicator()
             self.usersList = users
         }) { (error) in
-            
+            self.hideLoadingIndicator()
+            if let error = error { self.showError(error: error) }
         }
     }
     
