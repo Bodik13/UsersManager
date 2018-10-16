@@ -22,6 +22,10 @@ struct Defaults {
         }
     }
     
+    struct IMGUR {
+        static let CLIENT_ID = "e3aabe04653d19a"
+    }
+    
     struct Keys {
         static let ID = "id"
         static let USER = "user"
@@ -31,5 +35,9 @@ struct Defaults {
         static let IMAGE_URL = "image_url"
         static let CREATED = "created"
         static let UPDATED = "updated"
+        static let AUTHORIZATION = "Authorization"
+        static let IMAGE = "image"
+        static let DATA = "data"
+        static let LINK = "link"
     }
 }

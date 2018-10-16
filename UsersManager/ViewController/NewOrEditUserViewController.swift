@@ -9,14 +9,13 @@
 import UIKit
 
 class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressDisplayable, PhotoPickerDisplayable {
-
+    
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var newUserButton: UIButton!
     
-    var imagePickerViewController: UIImagePickerController?
     var selectedPhoto = UIImage() {
         didSet {
             self.photoImageView.image = selectedPhoto
@@ -25,9 +24,6 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.imagePickerViewController = UIImagePickerController()
-        self.imagePickerViewController?.delegate = self
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(NewOrEditUserViewController.photoTaped))
         self.photoImageView.addGestureRecognizer(tap)
@@ -37,20 +33,41 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
     @objc func photoTaped() {
         self.presentPhotoPickerActionSheet()
     }
-
+    
     @IBAction func newUserButtonTapped(_ sender: Any) {
-        let newUser = User(firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text, email: self.emailTextField.text)
-        
+        let imageUploadGroup = DispatchGroup()
+        let tempImageID = UUID().uuidString
+        var storedImageURL: String?
+        imageUploadGroup.enter()
         self.showLoadingIndicator()
-        NetworkManager.newUser(user: newUser, success: {
+        IMGURManager.post(image: self.selectedPhoto, for: tempImageID, success: { imageURL in
             self.hideLoadingIndicator()
-           self.showAllert(with: "Success!", messege: "New user successfully added.")
-        }) { (error) in
+            storedImageURL = imageURL
+            imageUploadGroup.leave()
+        }, failed: { error in
+            imageUploadGroup.leave()
             self.hideLoadingIndicator()
-            if let error = error { self.showError(error: error) }
+            if let error = error {
+              self.showError(error: error)
+            }
+        })
+        
+        imageUploadGroup.notify(queue: .main) {
+            if let exitingImageURL = storedImageURL {
+                let newUser = User(firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text, email: self.emailTextField.text, imageUrl: exitingImageURL)
+                
+                self.showLoadingIndicator()
+                NetworkManager.newUser(user: newUser, success: {
+                    self.hideLoadingIndicator()
+                    self.showAllert(with: "Success!", messege: "New user successfully added.")
+                }) { (error) in
+                    self.hideLoadingIndicator()
+                    if let error = error { self.showError(error: error) }
+                }
+            }
         }
     }
-   
+    
 }
 
 

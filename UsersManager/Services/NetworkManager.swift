@@ -50,37 +50,4 @@ class NetworkManager {
     
 }
 
-class IMGUR {
-    static func post(image: UIImage, for username: String) {
-        
-        let imageData = UIImagePNGRepresentation(image)
-        let base64Image = imageData?.base64EncodedString(options: .lineLength64Characters)
-        
-        
-        let parameters = [
-            "image": base64Image
-        ]
-        
-        Alamofire.upload(multipartFormData: { multipartFormData in
-            if let imageData = UIImageJPEGRepresentation(image, 1) {
-                multipartFormData.append(imageData, withName: username, fileName: "\(username).png", mimeType: "image/png")
-            }
-            
-            for (key, value) in parameters {
-                multipartFormData.append((value?.data(using: .utf8))!, withName: key)
-            }}, to: Defaults.URLS.IMGUR.UPLOAD, method: .post, headers: ["Authorization": "Client-ID " + "Constants.IMGUR_CLIENT_ID"],
-                encodingCompletion: { encodingResult in
-                    switch encodingResult {
-                    case .success(let upload, _, _):
-                        upload.response { response in
-                            let json = try? JSONSerialization.jsonObject(with: response.data!, options: .allowFragments) as! [String:Any]
-                            let imageDic = json?["data"] as? [String:Any]
-                            print(imageDic?["link"])
-                        }
-                    case .failure(let encodingError):
-                        print("error:\(encodingError)")
-                    }
-        })
-        
-    }
-}
+
