@@ -20,43 +20,56 @@ struct User {
 
 extension User: Serializable {
     
+    init(firstName: String? = "", lastName: String? = "", email: String? = "", imageUrl: String? = "", createdDate: Date = Date(), updatedDate: Date = Date()) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
+        self.imageUrl = imageUrl
+        self.createdDate = createdDate
+        self.updatedDate = updatedDate
+    }
+    
     init(dictData: [String : Any]?) {
         let dictData = dictData ?? [:]
         
-        if let id = dictData["id"] as? String {
+        if let id = dictData[Defaults.Keys.ID] as? String {
             self.id = id
         }
         
-        if let firstName = dictData["first_name"] as? String {
+        if let firstName = dictData[Defaults.Keys.FIRST_NAME] as? String {
             self.firstName = firstName
         }
         
-        if let lastName = dictData["last_name"] as? String {
+        if let lastName = dictData[Defaults.Keys.LAST_NAME] as? String {
             self.lastName = lastName
         }
         
-        if let createdDateStr = dictData["created"] as? String,
+        if let createdDateStr = dictData[Defaults.Keys.CREATED] as? String,
             let createdDate = DefaultDateFormatter.LocalDayWithHours.date(from: createdDateStr) {
             self.createdDate = createdDate
         }
         
-        if let updatedDateStr = dictData["updated"] as? String,
+        if let updatedDateStr = dictData[Defaults.Keys.UPDATED] as? String,
             let updatedDate = DefaultDateFormatter.LocalDayWithHours.date(from: updatedDateStr) {
             self.updatedDate = updatedDate
         }
         
-        if let imageUrl = dictData["image_url"] as? String {
+        if let imageUrl = dictData[Defaults.Keys.IMAGE_URL] as? String {
             self.imageUrl = imageUrl
         }
         
-        if let email = dictData["email"] as? String {
+        if let email = dictData[Defaults.Keys.EMAIL] as? String {
             self.email = email
         }
     }
     
-    func toDict() -> [String : Any] {
-        return [:]
+    func toDict() -> [String: Any] {
+        let entityDict: [String : Any] = [Defaults.Keys.FIRST_NAME  : self.firstName ?? "",
+                                          Defaults.Keys.LAST_NAME   : self.lastName ?? "",
+                                          Defaults.Keys.EMAIL       : self.email ?? "",
+                                          Defaults.Keys.IMAGE_URL   : self.imageUrl ?? ""]
+        
+        return entityDict
     }
-    
     
 }

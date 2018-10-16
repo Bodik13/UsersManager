@@ -15,7 +15,6 @@ class NetworkManager {
         Alamofire.request(Defaults.NetworkURLS.USERS).responseJSON { response in
             switch response.result {
             case .success:
-                print("Validation Successful")
                 if let json = response.result.value, let usersDict = json as? [[String: Any]] {
                     let users = usersDict.map { User(dictData: $0) }
                     print(users)
@@ -24,22 +23,27 @@ class NetworkManager {
                     success([User]())
                 }
             case .failure(let error):
-                print(error)
                 failed(error)
             }
         }
     }
     
-    class func downloadImage(with url: String?, success: @escaping (UIImage) -> ()) {
-        if let url = url {
-            Alamofire.download(url).responseData { response in
-                if let data = response.result.value {
-                    if let image = UIImage(data: data) {
-                       success(image)
-                    }
+    class func newUser(user: User, success: @escaping () -> (), failed: @escaping (Error?) -> ()) {
+        let bodyParams = [Defaults.Keys.USER : user.toDict()]
+        
+        Alamofire.request(Defaults.NetworkURLS.USERS, method: .post, parameters: bodyParams, encoding: JSONEncoding.default).responseJSON { response in
+            let successStatusCode = 201
+            switch response.result {
+            case .success:
+                if response.response?.statusCode == successStatusCode {
+                    success()
+                } else {
+                    failed(nil)
                 }
+            case .failure(let error):
+                failed(error)
             }
         }
     }
-    
+
 }
