@@ -16,7 +16,7 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var newUserButton: UIButton!
     
-    var selectedPhoto = UIImage() {
+    var selectedPhoto: UIImage? {
         didSet {
             self.photoImageView.image = selectedPhoto
         }
@@ -28,6 +28,11 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
         let tap = UITapGestureRecognizer(target: self, action: #selector(NewOrEditUserViewController.photoTaped))
         self.photoImageView.addGestureRecognizer(tap)
         self.photoImageView.isUserInteractionEnabled = true
+        
+        self.firstNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        self.lastNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        self.emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
     }
     
     @objc func photoTaped() {
@@ -38,33 +43,39 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
         let imageUploadGroup = DispatchGroup()
         let tempImageID = UUID().uuidString
         var storedImageURL: String?
-        imageUploadGroup.enter()
-        self.showLoadingIndicator()
-        IMGURManager.post(image: self.selectedPhoto, for: tempImageID, success: { imageURL in
-            self.hideLoadingIndicator()
-            storedImageURL = imageURL
-            imageUploadGroup.leave()
-        }, failed: { error in
-            imageUploadGroup.leave()
-            self.hideLoadingIndicator()
-            if let error = error {
-              self.showError(error: error)
-            }
-        })
+        
+        if let existSelectedPhoto = selectedPhoto {
+            imageUploadGroup.enter()
+            self.showLoadingIndicator()
+            IMGURManager.post(image: existSelectedPhoto, for: tempImageID, success: { imageURL in
+                self.hideLoadingIndicator()
+                storedImageURL = imageURL
+                imageUploadGroup.leave()
+            }, failed: { error in
+                imageUploadGroup.leave()
+                self.hideLoadingIndicator()
+                if let error = error {
+                    self.showError(error: error)
+                }
+            })
+        }
         
         imageUploadGroup.notify(queue: .main) {
             if let exitingImageURL = storedImageURL {
                 let newUser = User(firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text, email: self.emailTextField.text, imageUrl: exitingImageURL)
-                
-                self.showLoadingIndicator()
-                NetworkManager.newUser(user: newUser, success: {
-                    self.hideLoadingIndicator()
-                    self.showAllert(with: "Success!", messege: "New user successfully added.")
-                }) { (error) in
-                    self.hideLoadingIndicator()
-                    if let error = error { self.showError(error: error) }
-                }
+                self.createNew(user: newUser)
             }
+        }
+    }
+    
+    private func createNew(user: User) {
+        self.showLoadingIndicator()
+        NetworkManager.newUser(user: user, success: {
+            self.hideLoadingIndicator()
+            self.showAllert(with: "Success!", messege: "New user successfully added.")
+        }) { (error) in
+            self.hideLoadingIndicator()
+            if let error = error { self.showError(error: error) }
         }
     }
     
@@ -82,4 +93,28 @@ extension NewOrEditUserViewController: UIImagePickerControllerDelegate, UINaviga
         self.dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension NewOrEditUserViewController {
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        self.newUserButton.isEnabled = false
+        
+        guard let first = self.firstNameTextField.text, first != "" else {
+            print("textField 1 is empty")
+            return
+        }
+        
+        guard let second = self.lastNameTextField.text, second != "" else {
+            print("textField 2 is empty")
+            return
+        }
+        
+        guard let third = self.emailTextField.text, third != "" else {
+            print("textField 3 is empty")
+            return
+        }
+        
+        self.newUserButton.isEnabled = true
+        
+    }
 }
