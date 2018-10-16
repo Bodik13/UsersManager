@@ -11,7 +11,7 @@ import Alamofire
 
 class NetworkManager {
     class func getUsers(success: @escaping ([User]) -> (), failed: @escaping (Error?) -> ()) {
-        Alamofire.request(Defaults.NetworkURLS.API.USERS).responseJSON { response in
+        Alamofire.request(Defaults.URLS.API.USERS).responseJSON { response in
             switch response.result {
             case .success:
                 if let json = response.result.value, let usersDict = json as? [[String: Any]] {
@@ -29,7 +29,7 @@ class NetworkManager {
     class func newUser(user: User, success: @escaping () -> (), failed: @escaping (Error?) -> ()) {
         let bodyParams = [Defaults.Keys.USER : user.toDict()]
         
-        Alamofire.request(Defaults.NetworkURLS.API.USERS,
+        Alamofire.request(Defaults.URLS.API.USERS,
                           method: .post,
                           parameters: bodyParams,
                           encoding: JSONEncoding.default).responseJSON { response in
@@ -47,6 +47,10 @@ class NetworkManager {
         }
     }
     
+    
+}
+
+class IMGUR {
     static func post(image: UIImage, for username: String) {
         
         let imageData = UIImagePNGRepresentation(image)
@@ -64,7 +68,7 @@ class NetworkManager {
             
             for (key, value) in parameters {
                 multipartFormData.append((value?.data(using: .utf8))!, withName: key)
-            }}, to: Defaults.NetworkURLS.IMGUR.UPLOAD, method: .post, headers: ["Authorization": "Client-ID " + "Constants.IMGUR_CLIENT_ID"],
+            }}, to: Defaults.URLS.IMGUR.UPLOAD, method: .post, headers: ["Authorization": "Client-ID " + "Constants.IMGUR_CLIENT_ID"],
                 encodingCompletion: { encodingResult in
                     switch encodingResult {
                     case .success(let upload, _, _):

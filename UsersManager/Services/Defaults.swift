@@ -10,7 +10,7 @@ import Foundation
 
 struct Defaults {
     
-    struct NetworkURLS {
+    struct URLS {
         struct API {
             static let DOMAIN = "https://cua-users.herokuapp.com/"
             static let USERS = DOMAIN + "users.php"
