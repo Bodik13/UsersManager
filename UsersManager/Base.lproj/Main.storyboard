@@ -70,7 +70,7 @@
                                     <action selector="newUserButtonTapped:" destination="rD6-m1-wzK" eventType="touchUpInside" id="jnI-39-Ole"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xKk-md-QUN">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_account" translatesAutoresizingMaskIntoConstraints="NO" id="xKk-md-QUN">
                                 <rect key="frame" x="112" y="74" width="150" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -130,6 +130,7 @@
                         <outlet property="firstNameTextField" destination="njN-vH-ioh" id="beg-Ry-B1d"/>
                         <outlet property="lastNameTextField" destination="0jG-6H-pX8" id="CWN-Y9-NIO"/>
                         <outlet property="newUserButton" destination="eL2-c0-aWb" id="90x-iW-eQH"/>
+                        <outlet property="photoImageView" destination="xKk-md-QUN" id="1n1-Fw-bEk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tI9-ic-Obx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -155,4 +156,7 @@
             <point key="canvasLocation" x="183" y="82"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon_account" width="48" height="48"/>
+    </resources>
 </document>

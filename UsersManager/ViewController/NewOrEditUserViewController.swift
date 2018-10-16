@@ -8,17 +8,34 @@
 
 import UIKit
 
-class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressDisplayable {
+class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressDisplayable, PhotoPickerDisplayable {
 
+    @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var newUserButton: UIButton!
     
+    var imagePickerViewController: UIImagePickerController?
+    var selectedPhoto = UIImage() {
+        didSet {
+            self.photoImageView.image = selectedPhoto
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.imagePickerViewController = UIImagePickerController()
+        self.imagePickerViewController?.delegate = self
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(NewOrEditUserViewController.photoTaped))
+        self.photoImageView.addGestureRecognizer(tap)
+        self.photoImageView.isUserInteractionEnabled = true
+    }
+    
+    @objc func photoTaped() {
+        self.presentPhotoPickerActionSheet()
     }
 
     @IBAction func newUserButtonTapped(_ sender: Any) {
@@ -34,4 +51,18 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
         }
     }
    
+}
+
+
+extension NewOrEditUserViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.selectedPhoto = image
+        } else{
+            print("Something went wrong in  image")
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }

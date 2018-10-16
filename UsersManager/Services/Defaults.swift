@@ -11,8 +11,15 @@ import Foundation
 struct Defaults {
     
     struct NetworkURLS {
-        static let DOMAIN = "https://cua-users.herokuapp.com/"
-        static let USERS = DOMAIN + "users.php"
+        struct API {
+            static let DOMAIN = "https://cua-users.herokuapp.com/"
+            static let USERS = DOMAIN + "users.php"
+        }
+        
+        struct IMGUR {
+            static let DOMAIN = "https://api.imgur.com/"
+            static let UPLOAD = DOMAIN + "3/upload"
+        }
     }
     
     struct Keys {
