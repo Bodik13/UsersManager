@@ -23,6 +23,8 @@
 		A2D907B821750BED006FA74E /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D907B721750BED006FA74E /* Defaults.swift */; };
 		A2D907BA21750FA7006FA74E /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D907B921750FA7006FA74E /* Serializable.swift */; };
 		A2D907BC217528FE006FA74E /* DefaultDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D907BB217528FE006FA74E /* DefaultDateFormatter.swift */; };
+		A2F16A732177B7390026F17C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F16A722177B7390026F17C /* String.swift */; };
+		A2F16A752177B78E0026F17C /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F16A742177B78E0026F17C /* UITextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		A2D907B721750BED006FA74E /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		A2D907B921750FA7006FA74E /* Serializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		A2D907BB217528FE006FA74E /* DefaultDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDateFormatter.swift; sourceTree = "<group>"; };
+		A2F16A722177B7390026F17C /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		A2F16A742177B78E0026F17C /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		A99F73318FD2CC1385381CA5 /* Pods_UsersManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UsersManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C55F7E3284CA735C6FE34D15 /* Pods-UsersManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UsersManager.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UsersManager/Pods-UsersManager.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,6 +87,8 @@
 				19B82BB62176097100A2E693 /* AlertDisplayable.swift */,
 				19B82BB821760CA200A2E693 /* ProgressDisplayable.swift */,
 				19B82BBA2176153200A2E693 /* PhotoPickerDisplayable.swift */,
+				A2F16A722177B7390026F17C /* String.swift */,
+				A2F16A742177B78E0026F17C /* UITextField.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -273,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2D907BC217528FE006FA74E /* DefaultDateFormatter.swift in Sources */,
+				A2F16A732177B7390026F17C /* String.swift in Sources */,
 				A2D907BA21750FA7006FA74E /* Serializable.swift in Sources */,
 				19B82BB72176097100A2E693 /* AlertDisplayable.swift in Sources */,
 				190797D9216F7B9A00877A54 /* NewOrEditUserViewController.swift in Sources */,
@@ -280,6 +287,7 @@
 				19F12244216F436100C2DC30 /* UsersListViewController.swift in Sources */,
 				A2D907B6217507AA006FA74E /* NetworkManager.swift in Sources */,
 				19B82BB921760CA200A2E693 /* ProgressDisplayable.swift in Sources */,
+				A2F16A752177B78E0026F17C /* UITextField.swift in Sources */,
 				A27D88032176698500BDD498 /* IMGURManager.swift in Sources */,
 				19F12242216F436100C2DC30 /* AppDelegate.swift in Sources */,
 				190797D7216F799000877A54 /* User.swift in Sources */,

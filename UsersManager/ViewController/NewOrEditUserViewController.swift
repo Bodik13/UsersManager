@@ -15,6 +15,9 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var newUserButton: UIButton!
+    @IBOutlet weak var firstNameErrorLabel: UILabel!
+    @IBOutlet weak var lastNameErrorLabel: UILabel!
+    @IBOutlet weak var emailErrorLabel: UILabel!
     
     var selectedPhoto: UIImage? {
         didSet {
@@ -25,14 +28,15 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setupView()
+        
+    }
+    
+    fileprivate func setupView() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(NewOrEditUserViewController.photoTaped))
         self.photoImageView.addGestureRecognizer(tap)
         self.photoImageView.isUserInteractionEnabled = true
-        
-        self.firstNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        self.lastNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        self.emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        
+        self.newUserButton.isEnabled = false
     }
     
     @objc func photoTaped() {
@@ -42,14 +46,14 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
     @IBAction func newUserButtonTapped(_ sender: Any) {
         let imageUploadGroup = DispatchGroup()
         let tempImageID = UUID().uuidString
-        var storedImageURL: String?
+        var newUser = User(firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text, email: self.emailTextField.text)
         
         if let existSelectedPhoto = selectedPhoto {
             imageUploadGroup.enter()
             self.showLoadingIndicator()
             IMGURManager.post(image: existSelectedPhoto, for: tempImageID, success: { imageURL in
                 self.hideLoadingIndicator()
-                storedImageURL = imageURL
+                newUser.imageUrl = imageURL
                 imageUploadGroup.leave()
             }, failed: { error in
                 imageUploadGroup.leave()
@@ -58,13 +62,12 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
                     self.showError(error: error)
                 }
             })
+        } else {
+            self.createNew(user: newUser)
         }
         
         imageUploadGroup.notify(queue: .main) {
-            if let exitingImageURL = storedImageURL {
-                let newUser = User(firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text, email: self.emailTextField.text, imageUrl: exitingImageURL)
-                self.createNew(user: newUser)
-            }
+            self.createNew(user: newUser)
         }
     }
     
@@ -96,25 +99,46 @@ extension NewOrEditUserViewController: UIImagePickerControllerDelegate, UINaviga
 }
 
 extension NewOrEditUserViewController {
-    @objc func textFieldDidChange(_ textField: UITextField) {
+    @objc func validateTextField(_ textField: UITextField) {
         self.newUserButton.isEnabled = false
         
         guard let first = self.firstNameTextField.text, first != "" else {
-            print("textField 1 is empty")
+            self.firstNameErrorLabel.text = "First Name field is empty"
             return
         }
+        self.firstNameErrorLabel.text = ""
         
         guard let second = self.lastNameTextField.text, second != "" else {
-            print("textField 2 is empty")
+            self.lastNameErrorLabel.text = "Last Name field is empty"
             return
         }
+        self.lastNameErrorLabel.text = ""
         
-        guard let third = self.emailTextField.text, third != "" else {
-            print("textField 3 is empty")
+        guard let third = self.emailTextField.text, third.isEmailValid() else {
+            self.emailErrorLabel.text = "Email is incorrect"
             return
         }
+        self.emailErrorLabel.text = ""
         
         self.newUserButton.isEnabled = true
-        
+    }
+
+}
+
+extension NewOrEditUserViewController: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.validateTextField(textField)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.validateTextField(textField)
+        self.view.endEditing(false)
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        self.validateTextField(textField)
+        return true
     }
 }
