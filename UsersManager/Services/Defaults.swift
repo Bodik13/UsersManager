@@ -6,7 +6,7 @@
 //  Copyright © 2018 Bohdan Hutsul. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct Defaults {
     
@@ -14,6 +14,7 @@ struct Defaults {
         struct API {
             static let DOMAIN = "https://cua-users.herokuapp.com/"
             static let USERS = DOMAIN + "users.php"
+            static let EDIT_USER = DOMAIN + "edit_user.php?user_id="
         }
         
         struct IMGUR {
@@ -39,5 +40,13 @@ struct Defaults {
         static let IMAGE = "image"
         static let DATA = "data"
         static let LINK = "link"
+    }
+    
+    struct Colors {
+        static let NAVBAR_BG_COLOR = UIColor.init(hexString: "#DC6900") //#FF6347
+        static let INCOME_BTN_BG_COLOR = UIColor.init(hexString: "#20B2AA")
+        static let EXPENSE_BTN_BG_COLOR = UIColor.init(hexString: "#F08080")
+        static let LIGHT_GREEN_COLOR = UIColor.init(hexString: "#8ed861")
+        static let LIGHT_GREY_COLOR = UIColor.init(hexString: "#dddddd")
     }
 }

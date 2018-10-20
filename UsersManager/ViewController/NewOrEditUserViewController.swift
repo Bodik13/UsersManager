@@ -7,6 +7,12 @@
 //
 
 import UIKit
+import AlamofireImage
+
+enum DisplayMode {
+    case Edit
+    case New
+}
 
 class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressDisplayable, PhotoPickerDisplayable {
     
@@ -14,29 +20,58 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var newUserButton: UIButton!
     @IBOutlet weak var firstNameErrorLabel: UILabel!
     @IBOutlet weak var lastNameErrorLabel: UILabel!
     @IBOutlet weak var emailErrorLabel: UILabel!
+    @IBOutlet weak var newUserButton: OvalButton!
     
+    var displayMode: DisplayMode = .New
     var selectedPhoto: UIImage? {
         didSet {
             self.photoImageView.image = selectedPhoto
         }
     }
+    var user: User? {
+        didSet {
+            self.view.layoutIfNeeded()
+            self.firstNameTextField.text = user?.firstName
+            self.lastNameTextField.text = user?.lastName
+            self.emailTextField.text = user?.email
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setupView()
-        
     }
     
     fileprivate func setupView() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(NewOrEditUserViewController.photoTaped))
         self.photoImageView.addGestureRecognizer(tap)
         self.photoImageView.isUserInteractionEnabled = true
-        self.newUserButton.isEnabled = false
+        
+        self.hideKeyboardWhenTappedAround()
+        
+        if let user = self.user, let imageURL = URL(string: user.imageUrl ?? "") {
+            self.photoImageView.af_setImage(withURL: imageURL)
+        }
+        
+        var titleText: String?
+        switch self.displayMode {
+        case .Edit:
+            if let imageURL = URL(string: user?.imageUrl ?? "") {
+                self.photoImageView.af_setImage(withURL: imageURL)
+            }
+            titleText = "Редактирование пользователя"
+            self.newUserButton.setTitle("Сохранить", for: .normal)
+            self.newUserButton.backgroundColor = Defaults.Colors.INCOME_BTN_BG_COLOR
+        case .New:
+            self.newUserButton.isEnabled = false
+            titleText = "Создание пользователя"
+            self.newUserButton.setTitle("Создать", for: .normal)
+            self.newUserButton.backgroundColor = Defaults.Colors.EXPENSE_BTN_BG_COLOR
+        }
+        self.title = titleText
     }
     
     @objc func photoTaped() {
@@ -47,6 +82,10 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
         let imageUploadGroup = DispatchGroup()
         let tempImageID = UUID().uuidString
         var newUser = User(firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text, email: self.emailTextField.text)
+        
+        if let user = self.user {
+            newUser.id = user.id
+        }
         
         if let existSelectedPhoto = selectedPhoto {
             imageUploadGroup.enter()
@@ -63,23 +102,39 @@ class NewOrEditUserViewController: UIViewController, AlertDisplayable, ProgressD
                 }
             })
         } else {
-            self.createNew(user: newUser)
+            self.createUpdateUser(user: newUser, for: self.displayMode)
         }
         
         imageUploadGroup.notify(queue: .main) {
-            self.createNew(user: newUser)
+            self.createUpdateUser(user: newUser, for: self.displayMode)
         }
     }
     
-    private func createNew(user: User) {
+    private func createUpdateUser(user: User, for displayMode: DisplayMode) {
         self.showLoadingIndicator()
-        NetworkManager.newUser(user: user, success: {
-            self.hideLoadingIndicator()
-            self.showAllert(with: "Success!", messege: "New user successfully added.")
-        }) { (error) in
-            self.hideLoadingIndicator()
-            if let error = error { self.showError(error: error) }
+        switch displayMode {
+        case .New:
+            NetworkManager.newUser(user: user, success: {
+                self.hideLoadingIndicator()
+                self.showAllert(with: "Success!", messege: "New user successfully added.", okAction: {_ in
+                    self.navigationController?.popViewController(animated: true)
+                })
+            }) { (error) in
+                self.hideLoadingIndicator()
+                if let error = error { self.showError(error: error) }
+            }
+        case .Edit:
+            NetworkManager.updateUser(user: user, success: {
+                self.hideLoadingIndicator()
+                self.showAllert(with: "Success!", messege: "User successfully updated.", okAction: {_ in
+                    self.navigationController?.popViewController(animated: true)
+                })
+            }) { (error) in
+                self.hideLoadingIndicator()
+                if let error = error { self.showError(error: error) }
+            }
         }
+        
     }
     
 }

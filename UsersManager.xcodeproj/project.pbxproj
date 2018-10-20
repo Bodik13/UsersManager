@@ -25,6 +25,11 @@
 		A2D907BC217528FE006FA74E /* DefaultDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D907BB217528FE006FA74E /* DefaultDateFormatter.swift */; };
 		A2F16A732177B7390026F17C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F16A722177B7390026F17C /* String.swift */; };
 		A2F16A752177B78E0026F17C /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F16A742177B78E0026F17C /* UITextField.swift */; };
+		A2FB5172217B7393009E6802 /* OvalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FB5171217B7393009E6802 /* OvalButton.swift */; };
+		A2FB5174217B7420009E6802 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FB5173217B7420009E6802 /* UIColor.swift */; };
+		A2FB5176217B7491009E6802 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FB5175217B7491009E6802 /* UIViewController.swift */; };
+		A2FB5178217B7539009E6802 /* ParentNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FB5177217B7539009E6802 /* ParentNavController.swift */; };
+		A2FB517B217BB041009E6802 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FB517A217BB041009E6802 /* UserCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +53,11 @@
 		A2D907BB217528FE006FA74E /* DefaultDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDateFormatter.swift; sourceTree = "<group>"; };
 		A2F16A722177B7390026F17C /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		A2F16A742177B78E0026F17C /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
+		A2FB5171217B7393009E6802 /* OvalButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvalButton.swift; sourceTree = "<group>"; };
+		A2FB5173217B7420009E6802 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		A2FB5175217B7491009E6802 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		A2FB5177217B7539009E6802 /* ParentNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentNavController.swift; sourceTree = "<group>"; };
+		A2FB517A217BB041009E6802 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		A99F73318FD2CC1385381CA5 /* Pods_UsersManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UsersManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C55F7E3284CA735C6FE34D15 /* Pods-UsersManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UsersManager.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UsersManager/Pods-UsersManager.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +99,8 @@
 				19B82BBA2176153200A2E693 /* PhotoPickerDisplayable.swift */,
 				A2F16A722177B7390026F17C /* String.swift */,
 				A2F16A742177B78E0026F17C /* UITextField.swift */,
+				A2FB5173217B7420009E6802 /* UIColor.swift */,
+				A2FB5175217B7491009E6802 /* UIViewController.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -114,6 +126,7 @@
 		19F12240216F436100C2DC30 /* UsersManager */ = {
 			isa = PBXGroup;
 			children = (
+				A2FB5170217B736E009E6802 /* Controls */,
 				19B82BB52176095200A2E693 /* Extension */,
 				190797D5216F797500877A54 /* Model */,
 				190797D4216F758200877A54 /* ViewController */,
@@ -154,6 +167,24 @@
 				A27D88022176698500BDD498 /* IMGURManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		A2FB5170217B736E009E6802 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				A2FB5179217BAFC9009E6802 /* Cell */,
+				A2FB5171217B7393009E6802 /* OvalButton.swift */,
+				A2FB5177217B7539009E6802 /* ParentNavController.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		A2FB5179217BAFC9009E6802 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A2FB517A217BB041009E6802 /* UserCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,16 +311,21 @@
 			files = (
 				A2D907BC217528FE006FA74E /* DefaultDateFormatter.swift in Sources */,
 				A2F16A732177B7390026F17C /* String.swift in Sources */,
+				A2FB5172217B7393009E6802 /* OvalButton.swift in Sources */,
 				A2D907BA21750FA7006FA74E /* Serializable.swift in Sources */,
 				19B82BB72176097100A2E693 /* AlertDisplayable.swift in Sources */,
+				A2FB5174217B7420009E6802 /* UIColor.swift in Sources */,
+				A2FB517B217BB041009E6802 /* UserCell.swift in Sources */,
 				190797D9216F7B9A00877A54 /* NewOrEditUserViewController.swift in Sources */,
 				A2D907B821750BED006FA74E /* Defaults.swift in Sources */,
+				A2FB5176217B7491009E6802 /* UIViewController.swift in Sources */,
 				19F12244216F436100C2DC30 /* UsersListViewController.swift in Sources */,
 				A2D907B6217507AA006FA74E /* NetworkManager.swift in Sources */,
 				19B82BB921760CA200A2E693 /* ProgressDisplayable.swift in Sources */,
 				A2F16A752177B78E0026F17C /* UITextField.swift in Sources */,
 				A27D88032176698500BDD498 /* IMGURManager.swift in Sources */,
 				19F12242216F436100C2DC30 /* AppDelegate.swift in Sources */,
+				A2FB5178217B7539009E6802 /* ParentNavController.swift in Sources */,
 				190797D7216F799000877A54 /* User.swift in Sources */,
 				19B82BBB2176153200A2E693 /* PhotoPickerDisplayable.swift in Sources */,
 			);
@@ -439,7 +475,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DHT9CXHYVG;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = UsersManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -458,7 +494,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DHT9CXHYVG;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = UsersManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
